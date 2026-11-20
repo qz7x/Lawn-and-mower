@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hyper-Real Meadow</title>
+<style>
+  :root { color-scheme: dark; --fg:#f2ead8; --bg:rgba(14,12,8,.55); --accent:#e8c26a; }
+  html, body { margin:0; height:100%; background:#0b0a08; overflow:hidden; font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--fg); }
+  canvas { display:block; touch-action:none; cursor:grab; }
+  canvas:active { cursor:grabbing; }
+  #ui { position:fixed; top:12px; left:12px; width:236px; padding:10px 12px; background:var(--bg); backdrop-filter:blur(8px);
+        border:1px solid rgba(255,235,190,.15); border-radius:10px; }
+  #ui.hidden { display:none; }
+  #ui h1 { margin:0 0 6px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  #ui label { display:grid; grid-template-columns:62px 1fr 40px; align-items:center; gap:6px; margin:3px 0; }
+  #ui input[type=range] { width:100%; accent-color:var(--accent); }
+  #ui select { grid-column:2 / 4; background:#1a1710; color:var(--fg); border:1px solid #4a4128; border-radius:4px; padding:2px; }
+  #ui output { text-align:right; opacity:.8; }
+  #hud { margin-top:6px; opacity:.75; }
+  #help { margin-top:6px; opacity:.55; font-size:11px; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="ui">
+  <h1>Meadow</h1>
+  <label>Sun <input id="sunel" type="range" min="1" max="70" step="1" value="9"><output id="sunelv"></output></label>
+  <label>Wind <input id="wind" type="range" min="0" max="2" step="0.05" value="1"><output id="windv"></output></label>
+  <label>Dew <input id="dew" type="range" min="0" max="1.5" step="0.05" value="0.8"><output id="dewv"></output></label>
+  <label>Exposure <input id="exp" type="range" min="0.4" max="1.6" step="0.02" value="0.9"><output id="expv"></output></label>
+  <label>Quality <select id="qsel"><option>low</option><option>med</option><option selected>high</option><option>ultra</option></select></label>
+  <div id="hud">…</div>
+  <div id="help">drag: look · WASD/arrows: move (Shift ×4) · Q/E or wheel: eye height · Space: auto-walk · H: hide</div>
+</div>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
