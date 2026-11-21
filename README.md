@@ -63,3 +63,24 @@ all shaders read the same uniform objects.
 Rendered and inspected in headless Chromium on a software WebGL2 rasteriser (SwiftShader): all programs compile cleanly, frames are correct and animate,
 UI/keyboard/pointer paths run without console errors. **Frame rate on real GPUs has not been measured**; `high` submits ~28 M indices/frame
 (many collapse in the VS), so expect `med` for integrated GPUs. `docs/preview.png` was rendered at `?q=high`.
+
+---
+
+# Blade & Brew: lawn mower simulator (`game/`)
+
+Single-file HTML5 mowing game built on the grass engine above. Ride-on mower, real mowing (the cut mask shortens the blades and leaves striped lanes), seeded yards, fuel/bag/stations, a driver with a beer and a cigar, procedural audio, and multiplayer.
+
+| file | what |
+|---|---|
+| `dist/blade-and-brew.html` | **standalone game, one file** (Three.js bundled, no network needed to play). Give this to friends. |
+| `dist/artifact-page.html` | same game as a Claude artifact page |
+| `game/src/*` | source; `cd game && npm i && npm run build` regenerates `dist/` |
+
+Controls: W/S throttle, A/D steer, Shift boost, Space brake, E blades, G bagging, B beer, C cigar, H horn, V camera, R back to gate, Esc menu. Gamepad works.
+
+**Multiplayer.** One session protocol, three transports:
+- *Online room*: the artifact's `room` capability (realtime, no server). Only inside the artifact, only for people who can open it.
+- *This browser*: BroadcastChannel, for extra tabs/windows.
+- *Friend codes*: WebRTC data channels, no server. Host creates an invite code per friend, the friend pastes it and sends a reply code back. Works from the standalone file (uses Google's public STUN server to find routes; on one LAN it works without internet).
+
+The yard is generated from a seed shared by everyone in the room; each client simulates every mower's cutting from its streamed position, late joiners receive a coverage snapshot, and the match start/countdown is a single broadcast message.
